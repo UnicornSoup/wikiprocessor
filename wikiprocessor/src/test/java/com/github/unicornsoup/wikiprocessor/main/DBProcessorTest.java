@@ -4,21 +4,23 @@ import org.junit.Assert;
 import org.junit.Test;
 
 public class DBProcessorTest {
-	
+
 	@Test
-	public void testExtractPageIds(){
-		String categoryName = "Unprintworthy_redirects"; 
+	public void testExtractPageIds() {
+		String categoryName = "Unprintworthy_redirects";
 		String outputFile = "tmpIds";
 		DBProcessor dbProcessor = new DBProcessor();
-		Assert.assertEquals(true, dbProcessor.extractPageIds(categoryName, outputFile));
+		Assert.assertEquals(true,
+				dbProcessor.extractPageIds(categoryName, outputFile));
 	}
-	
+
 	@Test
-	public void testExtractPageTitles(){
-		String inputFile = "tmpIds"; 
+	public void testExtractPageTitles() {
+		String inputFile = "tmpIds";
 		String outputFile = "tmpTitles";
 		DBProcessor dbProcessor = new DBProcessor();
-		Assert.assertEquals(true, dbProcessor.extractPageTitles(inputFile, outputFile));
-	}	
+		Assert.assertEquals(true,
+				dbProcessor.extractPageTitles(inputFile, outputFile));
+	}
 
 }
