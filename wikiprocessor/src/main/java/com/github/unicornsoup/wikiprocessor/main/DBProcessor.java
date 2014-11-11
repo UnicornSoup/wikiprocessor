@@ -11,14 +11,52 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 /**
  * 
- * @author sp, anujagarwal464
+ * @author sjth, anujagarwal464
  * 
  *         This class extracts data from Wikipedia database tables
  * 
  */
 public class DBProcessor {
+	static final Logger log = Logger.getLogger(DBProcessor.class);
+	Connection con = null;
+	String db = "";
+	String user = "";
+	String password = "";
+	
+	DBProcessor(String db, String user, String password){
+		log.debug("constructor start");
+		this.db = db;
+		this.user = user;
+		this.password = password;
+		log.debug("constructor end");
+	}
+	
+	/**
+	 * Obtains connection if it is not already there. 
+	 * 
+	 * @return connection object, null for failure
+	 */
+	private Connection getConnection(){
+		log.debug("getConnection start");
+		if (con != null) return con;
+		String url = "jdbc:mysql://localhost:3306/" + db;
+		Statement stmt = null;	
+		try {
+			Class.forName("com.mysql.jdbc.Driver").newInstance();
+			log.debug("getConnection obtained driver");
+			con = DriverManager.getConnection(url, user, password);
+			log.debug("getConnection got connection");
+		} catch (Exception ex) {
+			log.error("getConnection: error:" + ex.getMessage(), ex);
+			return null;
+		}	
+		return con;
+	}
+	
 	/**
 	 * This method retrieves pageIds for a specific category from categorylinks
 	 * table. It writes the results to a local file.
@@ -27,23 +65,21 @@ public class DBProcessor {
 	 * @throws FileNotFoundException
 	 * @throws SQLException
 	 */
-	public boolean extractPageIds(String categoryName, String outputFile) {
+	private boolean extractPageIds(String categoryName, String outputFile) {
 
 		// ! Change port accordingly
-		String url = "jdbc:mysql://localhost:3306/wikidb";
+		//String url = "jdbc:mysql://localhost:3306/wikidb";
 		Connection con = null;
 		Statement stmt = null;
 		ArrayList<String> pageIds = new ArrayList<String>();
 
 		try {
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-
-			// ! Change password accordingly
-			con = DriverManager.getConnection(url, "root", "");
+			con = getConnection();
 			stmt = con.createStatement();
 		} catch (Exception ex) {
-			System.out
-					.println("Cannot open database -- make sure ODBC is configured properly.");
+			log.error("extractPageIds: Cannot open database -- " 
+					+ "make sure ODBC is configured properly:" 
+					+ ex.getMessage(), ex);
 			return false;
 		}
 
@@ -83,24 +119,19 @@ public class DBProcessor {
 	 * 
 	 * @return true for success, false for failure
 	 */
-	public boolean extractPageTitles(String inputFile, String outputFile) {
-
-		// ! Change port accordingly
-		String url = "jdbc:mysql://localhost:3306/wikidb";
+	private boolean extractPageTitles(String inputFile, String outputFile) {
 		Connection con = null;
 		Statement stmt = null;
 		ArrayList<String> pageIds = new ArrayList<String>();
 		ArrayList<String> pageTitles = new ArrayList<String>();
 
 		try {
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
-
-			// ! Change password accordingly
-			con = DriverManager.getConnection(url, "root", "");
+			con = getConnection();
 			stmt = con.createStatement();
 		} catch (Exception ex) {
-			System.out
-					.println("Cannot open database -- make sure ODBC is configured properly.");
+			log.error("extractPageTitles: Cannot open database -- " 
+					+ "make sure ODBC is configured properly:" 
+					+ ex.getMessage(), ex);			
 			return false;
 		}
 
@@ -142,6 +173,27 @@ public class DBProcessor {
 		}
 		out.close();
 
+		return true;
+	}
+	
+	/**
+	 * get page titles for category
+	 * 
+	 * @return the obvious
+	 */
+	public boolean getPageTitlesForCategory(String categoryName, String tempFile, String outputFile){
+		log.debug("getPageTitlesForCategory start");
+		boolean flag = false;
+		flag = extractPageIds(categoryName, tempFile);
+		if (!flag) {
+			log.error("getPageTitlesForCategory: extractPageIds failed");
+			return false;
+		}
+		flag = extractPageTitles(tempFile, outputFile);
+		if (!flag) {
+			log.error("getPageTitlesForCategory: extractPageTitles failed");
+			return false;
+		}
 		return true;
 	}
 

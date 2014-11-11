@@ -5,7 +5,7 @@
 <artifactId>wikiprocessor</artifactId>
 <version>0.0.1-SNAPSHOT</version>
 <build>
-    <sourceDirectory>${basedir}/src</sourceDirectory>
+    <!-- sourceDirectory>${basedir}/src</sourceDirectory -->
     <outputDirectory>${basedir}/build/classes</outputDirectory>
     <pluginManagement>
         <plugins>
@@ -24,13 +24,20 @@
 <name>wikiprocessor</name>
 <description>Wiki Processor</description>
 <dependencies>
-    <dependency>
+    <!-- dependency>
         <groupId>com.oracle</groupId>
         <artifactId>mysql-connector-java</artifactId>
         <version>5.1.33</version>
         <scope>system</scope>
         <systemPath>${basedir}/lib/mysql-connector-java-5.1.33-bin.jar</systemPath>
-    </dependency>
+    </dependency -->
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>5.1.33</version>
+        <scope>system</scope>
+        <systemPath>${basedir}/lib/mysql-connector-java-5.1.33-bin.jar</systemPath>
+    </dependency>    
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
@@ -41,5 +48,25 @@
         <artifactId>maven-surefire-plugin</artifactId>
         <version>2.17</version>
     </dependency>
+    <dependency>
+        <groupId>log4j</groupId>
+        <artifactId>log4j</artifactId>
+        <version>1.2.17</version>
+    </dependency>    
+    <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-common</artifactId>
+        <version>2.5.1</version>
+    </dependency>
+            <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-mapreduce-client-core</artifactId>
+        <version>2.5.1</version>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.hadoop</groupId>
+        <artifactId>hadoop-hdfs</artifactId>
+        <version>2.5.1</version>
+    </dependency>    
 </dependencies>
 </project>
