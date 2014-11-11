@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class DBProcessorTest {
     static {
-		System.setProperty("log4jprops", "/home/sp/workspaces/wikip/wikiprocessor/src/main/resources/log4j.properties");
+		System.setProperty("log4jprops", "CHANGETHIS");
 		System.setProperty("db", "CHANGETHIS");
 		System.setProperty("user", "root");
 		System.setProperty("password", "CHANGETHIS");        
