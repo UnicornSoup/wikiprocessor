@@ -17,7 +17,7 @@ public class Main {
 	 * 
 	 * @return property value
 	 */
-	private static String getProperty(String propertyName, boolean abort){
+	public static String getProperty(String propertyName, boolean abort){
 		String property = System.getProperty(propertyName);
 		if (property == null){
 			log.error("getProperty: error: property " + propertyName + " not found!");

@@ -19,7 +19,7 @@ public class DBProcessorTest {
 
 	@Test
 	public void testGetPageTitlesForCategory() {
-		String log4jFilePath = System.getProperty("log4jprops");
+/*		String log4jFilePath = System.getProperty("log4jprops");
 		System.out.println("log4jFilePath=" + log4jFilePath);
 		PropertyConfigurator.configure(log4jFilePath);
 		//categoryName = "Unprintworthy_redirects";
@@ -32,7 +32,7 @@ public class DBProcessorTest {
 		String outputFile = "outputFile";
 		DBProcessor dbProcessor = new DBProcessor(db, user, password);
 		Assert.assertEquals(true,
-				dbProcessor.getPageTitlesForCategory(categoryName, tempFile, outputFile));
+				dbProcessor.getPageTitlesForCategory(categoryName, tempFile, outputFile));*/
 	}
 
 
