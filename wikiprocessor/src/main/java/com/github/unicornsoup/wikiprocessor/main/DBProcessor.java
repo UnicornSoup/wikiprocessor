@@ -16,8 +16,7 @@ import org.apache.log4j.Logger;
 /**
  * 
  * @author sjth, anujagarwal464
- * 
- *         This class extracts data from Wikipedia database tables
+ * This class extracts data from Wikipedia database tables
  * 
  */
 public class DBProcessor {
@@ -26,25 +25,26 @@ public class DBProcessor {
 	String db = "";
 	String user = "";
 	String password = "";
-	
-	DBProcessor(String db, String user, String password){
+
+	DBProcessor(String db, String user, String password) {
 		log.debug("constructor start");
 		this.db = db;
 		this.user = user;
 		this.password = password;
 		log.debug("constructor end");
 	}
-	
+
 	/**
-	 * Obtains connection if it is not already there. 
+	 * Obtains connection if it is not already there.
 	 * 
 	 * @return connection object, null for failure
 	 */
-	private Connection getConnection(){
+	private Connection getConnection() {
 		log.debug("getConnection start");
-		if (con != null) return con;
+		if (con != null)
+			return con;
 		String url = "jdbc:mysql://localhost:3306/" + db;
-		Statement stmt = null;	
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();
 			log.debug("getConnection obtained driver");
@@ -53,10 +53,10 @@ public class DBProcessor {
 		} catch (Exception ex) {
 			log.error("getConnection: error:" + ex.getMessage(), ex);
 			return null;
-		}	
+		}
 		return con;
 	}
-	
+
 	/**
 	 * This method retrieves pageIds for a specific category from categorylinks
 	 * table. It writes the results to a local file.
@@ -68,7 +68,6 @@ public class DBProcessor {
 	private boolean extractPageIds(String categoryName, String outputFile) {
 
 		// ! Change port accordingly
-		//String url = "jdbc:mysql://localhost:3306/wikidb";
 		Connection con = null;
 		Statement stmt = null;
 		ArrayList<String> pageIds = new ArrayList<String>();
@@ -77,9 +76,10 @@ public class DBProcessor {
 			con = getConnection();
 			stmt = con.createStatement();
 		} catch (Exception ex) {
-			log.error("extractPageIds: Cannot open database -- " 
-					+ "make sure ODBC is configured properly:" 
-					+ ex.getMessage(), ex);
+			log.error(
+					"extractPageIds: Cannot open database -- "
+							+ "make sure ODBC is configured properly:"
+							+ ex.getMessage(), ex);
 			return false;
 		}
 
@@ -129,9 +129,10 @@ public class DBProcessor {
 			con = getConnection();
 			stmt = con.createStatement();
 		} catch (Exception ex) {
-			log.error("extractPageTitles: Cannot open database -- " 
-					+ "make sure ODBC is configured properly:" 
-					+ ex.getMessage(), ex);			
+			log.error(
+					"extractPageTitles: Cannot open database -- "
+							+ "make sure ODBC is configured properly:"
+							+ ex.getMessage(), ex);
 			return false;
 		}
 
@@ -175,13 +176,14 @@ public class DBProcessor {
 
 		return true;
 	}
-	
+
 	/**
 	 * get page titles for category
 	 * 
 	 * @return the obvious
 	 */
-	public boolean getPageTitlesForCategory(String categoryName, String tempFile, String outputFile){
+	public boolean getPageTitlesForCategory(String categoryName,
+			String tempFile, String outputFile) {
 		log.debug("getPageTitlesForCategory start");
 		boolean flag = false;
 		flag = extractPageIds(categoryName, tempFile);
