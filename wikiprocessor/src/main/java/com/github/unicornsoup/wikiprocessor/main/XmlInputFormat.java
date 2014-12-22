@@ -15,10 +15,12 @@
  * limitations under the License.
  */
 /*
- * sp: Customized this file to use the new API
+ * sp: 
+ * The original file is from Apache Mahout project. 
+ * Customized this file to use the new map-reduce API
  */
 
-package org.apache.mahout.classifier.bayes;
+package com.github.unicornsoup.wikiprocessor.main;
 
 import java.io.IOException;
 
@@ -28,8 +30,6 @@ import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.DataOutputBuffer;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.JobConf;
-import org.apache.hadoop.mapred.Reporter;
 import org.apache.hadoop.mapreduce.InputSplit;
 import org.apache.hadoop.mapreduce.RecordReader;
 import org.apache.hadoop.mapreduce.TaskAttemptContext;
@@ -47,9 +47,8 @@ public class XmlInputFormat extends TextInputFormat {
   public static final String END_TAG_KEY = "xmlinput.end";
   
  
-  public RecordReader<LongWritable,Text> getRecordReader(InputSplit inputSplit,
-                                                         JobConf jobConf,
-                                                         Reporter reporter) throws IOException {
+  public RecordReader<LongWritable,Text> createRecordReader(InputSplit inputSplit,
+		  TaskAttemptContext tac) {
     return new XmlRecordReader();
   }
   
